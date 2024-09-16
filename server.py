@@ -3,7 +3,6 @@
 import socket
 import threading
 
-# Function to handle communication with clients
 def handle_client(client_socket, client_address):
     print(f"[NEW CONNECTION] {client_address} connected.")
     
@@ -13,10 +12,8 @@ def handle_client(client_socket, client_address):
             message = client_socket.recv(1024).decode('utf-8')
             if message:
                 print(f"[{client_address}] {message}")
-                # Broadcasting the message to other clients
                 broadcast(message, client_socket)
             else:
-                # If message is empty, client has disconnected
                 print(f"[DISCONNECTED] {client_address}")
                 clients.remove(client_socket)
                 client_socket.close()
@@ -27,7 +24,6 @@ def handle_client(client_socket, client_address):
             client_socket.close()
             break
 
-# Function to broadcast messages to all connected clients
 def broadcast(message, sender_socket):
     for client in clients:
         if client != sender_socket:
